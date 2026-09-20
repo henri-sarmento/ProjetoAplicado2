@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status: Etapa 2 Concluída](https://img.shields.io/badge/Status-Etapa%202%20Conclu%C3%ADda-brightgreen.svg)]()
 
-> **Projeto Aplicado II — Ciência de Dados**  
+> **Projeto Aplicado II — Banco de Dados**  
 > **Universidade Presbiteriana Mackenzie** — Faculdade de Computação e Informática (FCI)  
 > **Equipe:** Henrique Sarmento, Felipe Magalhães de Melo Costa, Jefferson Candido Moreira, Karla Maria Ramos da Silva  
 
@@ -36,7 +36,7 @@ O modelo supervisionado foi avaliado no conjunto de teste independente (15% das 
 * **Topologia:** **MobileNetV2** (Sandler et al., 2018) via *Transfer Learning* com pesos pré-treinados no ImageNet-1k.
 * **Mecanismo de Eficiência:** **Convoluções Separáveis em Profundidade (*Depthwise Separable Convolutions*)** e Blocos Residuais Invertidos com Gargalo Linear, reduzindo o custo computacional de operações (FLOPs) em aproximadamente **9 vezes** ($\text{Razão} \approx 1/9$) em relação a arquiteturas clássicas como ResNet-50.
 * **Footprint:** Apenas **~3,5 milhões de parâmetros** e checkpoint de **26,4 MB**, viabilizando inferência rápida (< 50 ms) em smartphones de entrada.
-* **Otimização:** Otimizador **AdamW** ($\text{lr} = 10^{-4}$, $\text{weight\_decay} = 10^{-4}$), agendamento adaptativo com `ReduceLROnPlateau` e **CrossEntropyLoss ponderada** com pesos inversamente proporcionais à frequência das classes para neutralizar o desbalanceamento de 36:1 do dataset.
+* **Otimização:** Otimizador **AdamW**, agendamento adaptativo com `ReduceLROnPlateau` e **CrossEntropyLoss ponderada** com pesos inversamente proporcionais à frequência das classes para neutralizar o desbalanceamento de 36:1 do dataset.
 
 ---
 
@@ -125,15 +125,3 @@ python src/convert_md_to_docx.py
 ```bash
 pytest tests/
 ```
-
----
-
-## 6. Autores e Identificação Institucional
-* **Instituição:** Universidade Presbiteriana Mackenzie
-* **Curso:** Ciência de Dados — 4º Semestre
-* **Disciplina:** Projeto Aplicado II
-* **Equipe de Desenvolvimento:**
-  * Henrique Sarmento
-  * Felipe Magalhães de Melo Costa
-  * Jefferson Candido Moreira
-  * Karla Maria Ramos da Silva
