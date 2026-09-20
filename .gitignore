@@ -1,0 +1,43 @@
+# ==============================================================================
+# AgroSense Analytics — Git Ignore
+# ==============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Caches e Ambientes de Teste
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Ambientes Virtuais
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# Artefatos Temporários de Agentes e IDEs
+.agents/
+*.tmp
+*.bak
+.vscode/
+.idea/
+
+# Arquivos Temporários de Escritório / Word
+~$*.docx
+~$*.doc
+~$*.xlsx
+~$*.pptx
+
+# Dados Brutos Não Versionáveis (Acervo de Imagens > 800 MB)
+plantvillage dataset/
+data/raw/
+archive.zip
+*.tar.gz
+*.zip

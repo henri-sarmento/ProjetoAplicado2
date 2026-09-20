@@ -1,0 +1,27 @@
+# ==============================================================================
+# AgroSense Analytics — Dependências de Produção e Pesquisa
+# Projeto Aplicado II — Ciência de Dados (Universidade Presbiteriana Mackenzie)
+# ==============================================================================
+
+# Framework de Deep Learning e Visão Computacional (com suporte a CUDA 12.4)
+# Para instalação com aceleração de GPU: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+torch>=2.6.0
+torchvision>=0.21.0
+
+# Manipulação de Dados e Computação Numérica
+numpy>=1.26.0,<3.0.0
+pandas>=2.2.0
+scikit-learn>=1.5.0
+
+# Processamento de Imagens
+pillow>=10.0.0
+
+# Visualização Científica e Exportação Gráfica
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Geração de Relatórios Oficiais (Word)
+python-docx>=1.1.0
+
+# Suíte de Testes e Garantia de Qualidade
+pytest>=8.0.0
