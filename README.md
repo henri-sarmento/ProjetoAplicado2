@@ -4,124 +4,158 @@
 [![PyTorch 2.6](https://img.shields.io/badge/PyTorch-2.6.0%2Bcu124-ee4c2c.svg)](https://pytorch.org/)
 [![Torchvision](https://img.shields.io/badge/Torchvision-0.21.0-orange.svg)](https://pytorch.org/vision/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Status: Etapa 2 Concluída](https://img.shields.io/badge/Status-Etapa%202%20Conclu%C3%ADda-brightgreen.svg)]()
+[![Status: Etapa 3 Concluída](https://img.shields.io/badge/Status-Etapa%203%20Conclu%C3%ADda-brightgreen.svg)]()
 
-> **Projeto Aplicado II — Banco de Dados**  
+> **Projeto Aplicado II — Ciência de Dados**  
 > **Universidade Presbiteriana Mackenzie** — Faculdade de Computação e Informática (FCI)  
-> **Equipe:** Henrique Sarmento, Felipe Magalhães de Melo Costa, Jefferson Candido Moreira, Karla Maria Ramos da Silva  
+> **Integrantes da Equipe:**  
+> • Henrique Sarmento  
+> • Felipe Magalhães de Melo Costa  
+> • Jefferson Candido Moreira  
+> • Karla Maria Ramos da Silva  
 
 ---
 
-## 1. Proposta de Valor
-A **AgroSense Analytics** é uma agritech voltada à democratização da agricultura de precisão. O projeto desenvolve uma solução de **Edge AI (Inteligência Artificial embarcada)** para dispositivos móveis (Android), capaz de diagnosticar instantaneamente 38 classes de fitopatologias a partir de fotografias foliares tiradas diretamente pelo agricultor em campo, funcionando **100% offline** e sem necessidade de conexão com a internet.
+## 1. Visão Geral e Proposta de Valor
+A **AgroSense Analytics** é uma agritech concebida para democratizar o acesso à agricultura de precisão e mitigar os gargalos fitossanitários do campo brasileiro. Desenvolvemos uma solução de **Edge AI (Inteligência Artificial embarcada)** para dispositivos móveis, capaz de diagnosticar instantaneamente 38 classes de patologias em 14 culturas agrícolas vitais diretamente a partir de fotografias foliares capturadas no talhão.
+
+O produto opera **100% off-line**, dispensando qualquer conectividade celular (4G/5G) ou acesso a servidores em nuvem no momento da inferência, superando o principal obstáculo tecnológico do agronegócio nacional: mais de 70% das lavouras não possuem sinal de internet móvel.
 
 ---
 
-## 2. Métricas de Eficácia no Conjunto de Teste Inédito ($N = 8.146$)
-O modelo supervisionado foi avaliado no conjunto de teste independente (15% das 54.305 imagens), com garantia matemática de ausência de vazamento de dados (*Zero Data Leakage*):
+## 2. Diagnóstico Formal e Métricas no Teste Cego ($N = 8.146$)
+A eficácia do modelo foi rigorosamente validada no conjunto de teste independente (15% das 54.305 imagens do acervo PlantVillage), com partição estratificada e garantia matemática de **ausência total de vazamento de dados (*Zero Data Leakage*)**:
 
 | Métrica de Avaliação | Resultado Obtido | Significado Prático para a AgroSense |
 | :--- | :---: | :--- |
-| **Acurácia Global (Top-1)** | **99,41%** | 8.098 acertos exatos em 8.146 imagens de teste cego. |
-| **Acurácia Top-3** | **99,96%** | O diagnóstico real figura entre as 3 principais sugestões do app. |
-| **Acurácia Top-5** | **99,98%** | Risco quase nulo de omissão completa da patologia. |
-| **Macro F1-Score** | **99,19%** | Eficácia homogênea entre classes majoritárias e minoritárias. |
+| **Acurácia Global (Top-1)** | **99,41%** | 8.098 acertos exatos em 8.146 imagens inéditas de teste. |
+| **Acurácia Top-3** | **99,96%** | O diagnóstico real figura quase invariavelmente entre as 3 principais alternativas. |
+| **Acurácia Top-5** | **99,98%** | Risco praticamente nulo de omissão da patologia no aplicativo. |
+| **Macro F1-Score** | **99,19%** | Eficácia uniforme entre classes abundantes e patologias raras. |
 | **Weighted F1-Score** | **99,41%** | Desempenho ponderado pela representatividade de cada cultura. |
-| **Revocação da Classe Minoritária** | **100,00%** | **23 de 23 amostras de `Potato___healthy`** detectadas com 100% de precisão. |
-| **Tempo de Treinamento** | **19,24 min** | 5 épocas em GPU NVIDIA RTX 3060 (12 GB VRAM) com PyTorch CUDA 12.4. |
+| **Sensibilidade na Minoria** | **100,00%** | **23 de 23 amostras de `Potato___healthy`** detectadas com 100% de precisão. |
+| **Tempo de Inferência Local** | **< 50 ms** | Resposta instantânea on-device via NPU/CPU de smartphones convencionais. |
+| **Footprint de Armazenamento** | **26,38 MB** | Grafo neural compilado viabilizando download ágil e baixo consumo de memória. |
 
 ---
 
-## 3. Arquitetura Técnica da Solução
-* **Topologia:** **MobileNetV2** (Sandler et al., 2018) via *Transfer Learning* com pesos pré-treinados no ImageNet-1k.
-* **Mecanismo de Eficiência:** **Convoluções Separáveis em Profundidade (*Depthwise Separable Convolutions*)** e Blocos Residuais Invertidos com Gargalo Linear, reduzindo o custo computacional de operações (FLOPs) em aproximadamente **9 vezes** ($\text{Razão} \approx 1/9$) em relação a arquiteturas clássicas como ResNet-50.
-* **Footprint:** Apenas **~3,5 milhões de parâmetros** e checkpoint de **26,4 MB**, viabilizando inferência rápida (< 50 ms) em smartphones de entrada.
-* **Otimização:** Otimizador **AdamW**, agendamento adaptativo com `ReduceLROnPlateau` e **CrossEntropyLoss ponderada** com pesos inversamente proporcionais à frequência das classes para neutralizar o desbalanceamento de 36:1 do dataset.
+## 3. Especificação do Produto e Modelo de Negócios (B2B SaaS)
+
+### 3.1 Arquitetura da Solução Edge AI
+* **Motor Neural On-Device:** Rede convolucional **MobileNetV2** adaptada com convoluções separáveis em profundidade (*Depthwise Separable Convolutions*) e blocos residuais invertidos, reduzindo o custo computacional (FLOPs) em ~9x frente a redes clássicas (ResNet-50).
+* **Blindagem Fitossanitária:** Limiar de confiança ativo em 85%. Inferências abaixo dessa probabilidade acionam recomendação protocolar para envio de amostra a laboratório fitopatológico credenciado.
+* **Sincronização Assíncrona Opcional:** Coleta georreferenciada de laudos via GPS local. Assim que o técnico retorna à sede com conectividade, os registros alimentam o dashboard epidemiológico regional da cooperativa.
+
+### 3.2 Impacto Financeiro e Projeção de ROI
+* **Economia Direta de Defensivos:** Redução de **R$ 180 a R$ 350 por hectare** ao substituir pulverizações calendarizadas por intervenções cirúrgicas de precisão.
+* **Resgate de Produtividade:** Prevenção de quebra de safra estimada entre **5% e 15%** mediante diagnóstico e contenção nas primeiras 48 horas de infestação.
+* **Aderência ESG:** Redução substancial de resíduos químicos no solo e nos lençóis freáticos, alinhando a operação aos ODS 2 (Fome Zero e Agricultura Sustentável) e ODS 12 (Consumo e Produção Responsáveis) da ONU.
 
 ---
 
-## 4. Estrutura do Repositório
+## 4. Estrutura Modular do Repositório
+
+O repositório está organizado de forma cumulativa e auditável por etapas de desenvolvimento:
+
 ```text
 ProjetoAplicado2/
-├── data/
-│   ├── metadados_plantvillage.csv      # Catálogo estruturado com 54.305 linhas e 19 colunas
-│   └── metadados_plantvillage.csv.gz   # Versão compactada para economia de tráfego
-├── docs/
-│   ├── A1 - Aplicando conhecimento.pdf # Documento oficial entregue na Etapa 1
-│   ├── Modelo de entrega.docx          # Template base acadêmico da instituição
-│   ├── Relatorio_Etapa_2_Produto_Analitico.md # Relatório técnico completo em Markdown
-│   └── Relatorio_Etapa2_AgroSense.docx # Relatório acadêmico compilado da Etapa 2 (ABNT)
-├── models/
-│   └── mobilenetv2_plantvillage.pth    # Checkpoint ótimo da MobileNetV2 treinada (26,4 MB)
-├── notebooks/
-│   ├── Etapa_2_Analise_Exploratoria_e_Dicionario.ipynb # Notebook 1: EDA e Dicionário de Dados
-│   └── Etapa_2_Treinamento_Modelo_e_Metricas.ipynb     # Notebook 2: Treino e Avaliação PyTorch
-├── reports/
-│   ├── figures/                        # 7 figuras técnicas exportadas em 300 DPI
-│   │   ├── eda_distribuicao_classes.png
-│   │   ├── eda_status_sanitario.png
-│   │   ├── eda_mosaico_patologias.png
-│   │   ├── eda_distribuicao_rgb.png
-│   │   ├── curvas_aprendizado.png
-│   │   ├── matriz_confusao.png
-│   │   └── galeria_inferencia.png
-│   └── metrics/
-│       ├── classification_report.csv   # Relatório de precisão, recall e F1 por patologia
-│       └── metricas_resumo.json        # Resumo executivo estruturado em JSON
-├── src/
-│   ├── extract_metadata.py             # Extração concorrente de metadados das imagens
-│   ├── train_etapa2.py                 # Script de treinamento supervisionado MobileNetV2
-│   ├── evaluate_metrics.py             # Avaliação independente no teste e métricas completas
-│   ├── export_eda_figures.py           # Renderização e exportação das 4 figuras de EDA
-│   └── convert_md_to_docx.py           # Compilação do relatório ABNT para Microsoft Word
-├── tests/
-│   ├── conftest.py                     # Fixtures e configuração do Pytest
-│   ├── run_tests.py                    # Runner automatizado da suíte de testes
-│   ├── test_etapa2_pipeline.py         # Testes funcionais e asserções de zero leakage
-│   └── test_empirical_challenger.py    # Testes adversariais e casos de borda
-├── .gitignore                          # Regras de exclusão de artefatos e dados brutos
-├── pytest.ini                          # Configuração de execução do Pytest
-├── README.md                           # Documentação central do projeto
-└── requirements.txt                    # Dependências de produção do projeto
+├── docs/                                  # Entregas oficiais consolidadas do projeto
+│   ├── A1 - Aplicando conhecimento.docx / .pdf  # Etapa 1: Formulação do Problema
+│   ├── A2 - Aplicando conhecimento.docx / .pdf  # Etapa 2: Modelagem Preditiva
+│   └── Relatorio_Etapa3_AgroSense_ABNT.docx / .pdf # Etapa 3: Produto Analítico e Negócios
+├── Etapa 1/                               # Concepção, justificativa e referencial teórico
+│   ├── A1 - Aplicando conhecimento.docx
+│   └── A1 - Aplicando conhecimento.pdf
+├── Etapa 2/                               # Pipeline de Machine Learning e Validação Cega
+│   ├── data/                              # Metadados das 54.305 imagens auditadas
+│   ├── models/                            # Checkpoint treinado da MobileNetV2 (26,38 MB)
+│   ├── notebooks/                         # Notebooks exploratórios e de treinamento
+│   ├── reports/                           # Figuras de EDA (300 DPI) e relatórios de métricas
+│   ├── src/                               # Scripts modulares (treinamento, EDA e métricas)
+│   ├── tests/                             # Suíte automatizada de testes e asserções antifalha
+│   └── Relatorio_Etapa2_AgroSense_ABNT.docx
+├── Etapa 3/                               # Produto Analítico, Viabilidade e Storytelling
+│   ├── data/                              # Catálogo de metadados sincronizado
+│   ├── docs/                              # Plano de trabalho detalhado da Etapa 3
+│   ├── models/                            # Grafo MobileNetV2 validado
+│   ├── notebooks/                         # Esteira analítica interativa completa
+│   │   ├── 01_eda_e_metadados.ipynb
+│   │   ├── 02_preparacao_e_treinamento_mobilenetv2.ipynb
+│   │   ├── 03_avaliacao_metricas_e_diagnostico.ipynb
+│   │   └── 04_geracao_figuras_relatorio.ipynb # Customização visual de BMC e Storytelling
+│   ├── reports/                           # Artefatos visuais e métricas consolidadas
+│   │   ├── figures/                       # BMC, Arco Narrativo, Arquitetura e EDA
+│   │   └── metrics/                       # classification_report.csv e metricas_resumo.json
+│   ├── relatorio_etapa3.md                # Fonte textual do relatório técnico
+│   └── Relatorio_Etapa3_AgroSense_ABNT.docx # Relatório final formal segundo normas ABNT
+├── .gitignore                             # Regras de exclusão de binários e dados volumosos
+├── pytest.ini                             # Configuração da suíte Pytest
+├── README.md                              # Documentação central do repositório
+└── requirements.txt                       # Dependências de produção, pesquisa e notebooks
 ```
 
 ---
 
 ## 5. Instruções Rápidas de Reprodução
 
-### 5.1 Instalação do Ambiente
+### 5.1 Configuração do Ambiente Virtual
 Clone o repositório e instale as dependências:
 ```bash
 git clone https://github.com/henri-sarmento/ProjetoAplicado2.git
 cd ProjetoAplicado2
+python -m venv .venv
+# Ativação no Windows:
+.venv\Scripts\activate
+# Ativação no Linux/macOS:
+source .venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
-> **Dica para aceleração CUDA:** Caso possua GPU NVIDIA, instale a versão com suporte a CUDA 12.4:
+> **Aceleração via GPU (NVIDIA CUDA 12.4):** Caso utilize ambiente com placa NVIDIA, instale o build correspondente do PyTorch:
 > ```bash
 > pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
 > ```
 
-### 5.2 Avaliação das Métricas do Modelo (Sem Re-treinamento)
+### 5.2 Execução dos Testes Automatizados da Etapa 2
+Para executar as asserções de qualidade, integridade dos tensores e ausência de *data leakage*:
+```bash
+pytest "Etapa 2/tests"
+```
+
+### 5.3 Auditoria Independente de Métricas (Sem Necessidade de Retreino)
 Execute a inferência cega sobre o conjunto de teste utilizando o checkpoint persistido:
 ```bash
-python src/evaluate_metrics.py
-```
-*Gera os relatórios `reports/metrics/classification_report.csv` e `reports/metrics/metricas_resumo.json`.*
-
-### 5.3 Exportação das Figuras em Alta Resolução (300 DPI)
-Para regerar os gráficos de EDA:
-```bash
-python src/export_eda_figures.py
+python "Etapa 2/src/evaluate_metrics.py"
 ```
 
-### 5.4 Compilação do Relatório Word Oficial
-Para compilar o documento ABNT formatado:
+### 5.4 Execução da Esteira da Etapa 3 via Jupyter
+Inicie o servidor Jupyter para explorar ou reexecutar os notebooks da esteira analítica:
 ```bash
-python src/convert_md_to_docx.py
+jupyter lab
 ```
+Navegue até a pasta `Etapa 3/notebooks/` para acessar:
+* `01_eda_e_metadados.ipynb`: Análise exploratória e extração de metadados foliares.
+* `02_preparacao_e_treinamento_mobilenetv2.ipynb`: Pipeline PyTorch e treinamento supervisionado com função de perda ponderada.
+* `03_avaliacao_metricas_e_diagnostico.ipynb`: Matriz de confusão e métricas no teste cego.
+* `04_geracao_figuras_relatorio.ipynb`: Geração e customização visual interativa do Business Model Canvas, Arco Narrativo e Arquitetura Edge AI.
 
-### 5.5 Execução dos Testes Automatizados
-```bash
-pytest tests/
-```
+---
+
+## 6. Arco Narrativo de Data Storytelling (Pitch Executivo)
+
+* **Ato 1: O Prejuízo Invisível no Talhão (O Problema)**  
+  O agronegócio brasileiro perde anualmente mais de R$ 55 bilhões devido a pragas e patologias foliares. A inspeção visual humana é escassa e sujeita a diagnósticos tardios. Quando o agrônomo tenta recorrer a ferramentas digitais, depara-se com o fato de que mais de 70% das lavouras não possuem sinal 4G/5G, exibindo a tela de *"Sem conexão"*.
+
+* **Ato 2: AgroSense Mobile — Inteligência Artificial On-Device Sem Internet (A Proposta de Valor)**  
+  O AgroSense coloca um laboratório fitopatológico no bolso do agrônomo. O diagnóstico ocorre em menos de 50 milissegundos através da câmera, operando 100% off-line. Essa agilidade é sustentada por uma rede neural convolucional leve (MobileNetV2, 26,38 MB), calibrada para 38 classes patológicas e comprovada com 99,41% de acurácia em teste cego.
+
+* **Ato 3: Da Detecção Precoce ao Bolso — Economia e Inteligência Regional (O Resultado)**  
+  A intervenção em até 48 horas resgata de 5% a 15% da produtividade que seria perdida e gera economia direta de R$ 180 a R$ 350 por hectare em defensivos. Para as cooperativas, a telemetria assíncrona georreferenciada viabiliza mapas de calor regionais e prevenção epidemiológica, com pleno alinhamento ESG.
+
+---
+
+## 7. Licença e Referências Técnicas
+* **Licença:** Distribuído sob a licença [MIT](LICENSE).
+* **Base de Dados:** Hughes, D., & Salathé, M. (2015). *An open access repository of images on plant health to enable the development of mobile disease diagnostics*. arXiv:1511.08060 (PlantVillage).
+* **Arquitetura Base:** Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., & Chen, L. C. (2018). *MobileNetV2: Inverted Residuals and Linear Bottlenecks*. CVPR 2018.

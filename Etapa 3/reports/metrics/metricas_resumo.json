@@ -1,0 +1,20 @@
+{
+  "top1_accuracy_percent": 99.41,
+  "top3_accuracy_percent": 99.96,
+  "top5_accuracy_percent": 99.98,
+  "macro_f1_percent": 99.19,
+  "macro_precision_percent": 99.07,
+  "macro_recall_percent": 99.38,
+  "weighted_f1_percent": 99.41,
+  "weighted_precision_percent": 99.44,
+  "weighted_recall_percent": 99.41,
+  "minority_class_analysis": {
+    "class_name": "Potato___healthy",
+    "support": 23,
+    "accuracy_recall_percent": 100.0,
+    "precision_percent": 100.0,
+    "f1_score_percent": 100.0
+  },
+  "total_test_samples": 8146,
+  "num_classes": 38
+}
