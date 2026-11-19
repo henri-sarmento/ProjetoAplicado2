@@ -1,0 +1,38 @@
+{
+  "top1_accuracy_percent": 99.41,
+  "top3_accuracy_percent": 99.96,
+  "top5_accuracy_percent": 99.98,
+  "macro_f1_percent": 99.19,
+  "macro_precision_percent": 99.07,
+  "macro_recall_percent": 99.38,
+  "weighted_f1_percent": 99.41,
+  "weighted_precision_percent": 99.44,
+  "weighted_recall_percent": 99.41,
+  "minority_class_analysis": {
+    "class_name": "Potato___healthy",
+    "support": 23,
+    "accuracy_recall_percent": 100.0,
+    "precision_percent": 100.0,
+    "f1_score_percent": 100.0
+  },
+  "total_test_samples": 8146,
+  "num_classes": 38,
+  "latency_benchmark_local": {
+    "batch_gpu_ms_per_img": 1.91,
+    "batch_gpu_throughput_fps": 523.4,
+    "gpu_unit_ms": {
+      "mean_ms": 3.75,
+      "median_ms": 3.51,
+      "p95_ms": 3.79,
+      "std_ms": 1.13
+    },
+    "cpu_unit_ms": {
+      "mean_ms": 7.47,
+      "median_ms": 7.38,
+      "p95_ms": 8.22,
+      "std_ms": 0.51
+    },
+    "hardware_gpu": "NVIDIA GeForce RTX 3060",
+    "note": "Medição em desktop local (não medida em smartphone físico)."
+  }
+}

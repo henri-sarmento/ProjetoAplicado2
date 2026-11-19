@@ -1,0 +1,42 @@
+,precision,recall,f1-score,support
+Apple___Apple_scab,1.0000,1.0000,1.0000,94.0000
+Apple___Black_rot,1.0000,1.0000,1.0000,93.0000
+Apple___Cedar_apple_rust,1.0000,1.0000,1.0000,41.0000
+Apple___healthy,1.0000,1.0000,1.0000,246.0000
+Blueberry___healthy,1.0000,1.0000,1.0000,226.0000
+Cherry_(including_sour)___Powdery_mildew,0.9937,1.0000,0.9968,158.0000
+Cherry_(including_sour)___healthy,1.0000,0.9922,0.9961,128.0000
+Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot,0.8370,1.0000,0.9112,77.0000
+Corn_(maize)___Common_rust_,1.0000,1.0000,1.0000,179.0000
+Corn_(maize)___Northern_Leaf_Blight,1.0000,0.8980,0.9462,147.0000
+Corn_(maize)___healthy,0.9943,1.0000,0.9971,174.0000
+Grape___Black_rot,1.0000,0.9831,0.9915,177.0000
+Grape___Esca_(Black_Measles),0.9857,1.0000,0.9928,207.0000
+Grape___Leaf_blight_(Isariopsis_Leaf_Spot),1.0000,1.0000,1.0000,162.0000
+Grape___healthy,1.0000,1.0000,1.0000,64.0000
+Orange___Haunglongbing_(Citrus_greening),1.0000,1.0000,1.0000,826.0000
+Peach___Bacterial_spot,1.0000,1.0000,1.0000,344.0000
+Peach___healthy,1.0000,1.0000,1.0000,54.0000
+"Pepper,_bell___Bacterial_spot",1.0000,1.0000,1.0000,150.0000
+"Pepper,_bell___healthy",0.9955,1.0000,0.9978,222.0000
+Potato___Early_blight,1.0000,1.0000,1.0000,150.0000
+Potato___Late_blight,0.9867,0.9867,0.9867,150.0000
+Potato___healthy,1.0000,1.0000,1.0000,23.0000
+Raspberry___healthy,1.0000,1.0000,1.0000,55.0000
+Soybean___healthy,1.0000,0.9974,0.9987,764.0000
+Squash___Powdery_mildew,1.0000,1.0000,1.0000,275.0000
+Strawberry___Leaf_scorch,0.9940,1.0000,0.9970,167.0000
+Strawberry___healthy,1.0000,1.0000,1.0000,68.0000
+Tomato___Bacterial_spot,0.9969,0.9937,0.9953,319.0000
+Tomato___Early_blight,0.9545,0.9800,0.9671,150.0000
+Tomato___Late_blight,0.9859,0.9721,0.9789,287.0000
+Tomato___Leaf_Mold,0.9931,1.0000,0.9965,143.0000
+Tomato___Septoria_leaf_spot,1.0000,0.9887,0.9943,265.0000
+Tomato___Spider_mites Two-spotted_spider_mite,0.9920,0.9841,0.9880,252.0000
+Tomato___Target_Spot,0.9812,0.9905,0.9858,211.0000
+Tomato___Tomato_Yellow_Leaf_Curl_Virus,0.9988,0.9963,0.9975,803.0000
+Tomato___Tomato_mosaic_virus,0.9655,1.0000,0.9825,56.0000
+Tomato___healthy,0.9917,1.0000,0.9958,239.0000
+accuracy,0.9941,0.9941,0.9941,0.9941
+macro avg,0.9907,0.9938,0.9919,8146.0000
+weighted avg,0.9944,0.9941,0.9941,8146.0000

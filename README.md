@@ -1,161 +1,157 @@
-# AgroSense Analytics — Inteligência Fitossanitária Móvel (Edge AI)
+# AgroSense Analytics — Classificação Fitopatológica Foliar com MobileNetV2 e Arquitetura Edge AI
 
-[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-[![PyTorch 2.6](https://img.shields.io/badge/PyTorch-2.6.0%2Bcu124-ee4c2c.svg)](https://pytorch.org/)
-[![Torchvision](https://img.shields.io/badge/Torchvision-0.21.0-orange.svg)](https://pytorch.org/vision/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Status: Etapa 3 Concluída](https://img.shields.io/badge/Status-Etapa%203%20Conclu%C3%ADda-brightgreen.svg)]()
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
+[![PyTorch 2.6+](https://img.shields.io/badge/PyTorch-2.6%2B-ee4c2c.svg)](https://pytorch.org/)
+[![Torchvision](https://img.shields.io/badge/Torchvision-0.21%2B-orange.svg)](https://pytorch.org/vision/)
+[![Jupyter Notebooks](https://img.shields.io/badge/Notebooks-100%25%20.ipynb-F37626.svg)](Etapa%204/notebooks/)
+[![Status: Etapa 4 Concluída](https://img.shields.io/badge/Status-Etapa%204%20(Entrega%20Final)-brightgreen.svg)](docs/)
 
-> **Projeto Aplicado II — Ciência de Dados**  
+> **Projeto Aplicado II — Banco de Dados — EAD**  
 > **Universidade Presbiteriana Mackenzie** — Faculdade de Computação e Informática (FCI)  
-> **Integrantes da Equipe:**  
-> • Henrique Sarmento  
-> • Felipe Magalhães de Melo Costa  
-> • Jefferson Candido Moreira  
-> • Karla Maria Ramos da Silva  
+> **Professor Orientador:** Prof. Anderson Adaime de Borba  
+> **Equipe:** Henrique Sarmento · Felipe Magalhães de Melo Costa · Jefferson Candido Moreira · Karla Maria Ramos da Silva
 
 ---
 
-## 1. Visão Geral e Proposta de Valor
-A **AgroSense Analytics** é uma agritech concebida para democratizar o acesso à agricultura de precisão e mitigar os gargalos fitossanitários do campo brasileiro. Desenvolvemos uma solução de **Edge AI (Inteligência Artificial embarcada)** para dispositivos móveis, capaz de diagnosticar instantaneamente 38 classes de patologias em 14 culturas agrícolas vitais diretamente a partir de fotografias foliares capturadas no talhão.
+## Acesso Rápido aos Entregáveis Finais (Etapa 4)
 
-O produto opera **100% off-line**, dispensando qualquer conectividade celular (4G/5G) ou acesso a servidores em nuvem no momento da inferência, superando o principal obstáculo tecnológico do agronegócio nacional: mais de 70% das lavouras não possuem sinal de internet móvel.
-
----
-
-## 2. Diagnóstico Formal e Métricas no Teste Cego ($N = 8.146$)
-A eficácia do modelo foi rigorosamente validada no conjunto de teste independente (15% das 54.305 imagens do acervo PlantVillage), com partição estratificada e garantia matemática de **ausência total de vazamento de dados (*Zero Data Leakage*)**:
-
-| Métrica de Avaliação | Resultado Obtido | Significado Prático para a AgroSense |
-| :--- | :---: | :--- |
-| **Acurácia Global (Top-1)** | **99,41%** | 8.098 acertos exatos em 8.146 imagens inéditas de teste. |
-| **Acurácia Top-3** | **99,96%** | O diagnóstico real figura quase invariavelmente entre as 3 principais alternativas. |
-| **Acurácia Top-5** | **99,98%** | Risco praticamente nulo de omissão da patologia no aplicativo. |
-| **Macro F1-Score** | **99,19%** | Eficácia uniforme entre classes abundantes e patologias raras. |
-| **Weighted F1-Score** | **99,41%** | Desempenho ponderado pela representatividade de cada cultura. |
-| **Sensibilidade na Minoria** | **100,00%** | **23 de 23 amostras de `Potato___healthy`** detectadas com 100% de precisão. |
-| **Tempo de Inferência Local** | **< 50 ms** | Resposta instantânea on-device via NPU/CPU de smartphones convencionais. |
-| **Footprint de Armazenamento** | **26,38 MB** | Grafo neural compilado viabilizando download ágil e baixo consumo de memória. |
+* **Apresentação em Vídeo (YouTube):** `[Inserir link do vídeo publicado no YouTube após gravação]`
+* **Relatório Técnico Final (ABNT):** [`docs/Relatorio_Etapa4_AgroSense_ABNT.pdf`](docs/Relatorio_Etapa4_AgroSense_ABNT.pdf) | [`docs/Relatorio_Etapa4_AgroSense_ABNT.docx`](docs/Relatorio_Etapa4_AgroSense_ABNT.docx)
+* **Apresentação Executiva:** [`docs/Apresentacao_Etapa4_AgroSense.pptx`](docs/Apresentacao_Etapa4_AgroSense.pptx)
+* **Diretório para Replicação em Código:** [`Etapa 4/notebooks/`](Etapa%204/notebooks/) 
 
 ---
 
-## 3. Especificação do Produto e Modelo de Negócios (B2B SaaS)
+## 1. Como Navegar pelo Repositório (Por Onde Começar?)
 
-### 3.1 Arquitetura da Solução Edge AI
-* **Motor Neural On-Device:** Rede convolucional **MobileNetV2** adaptada com convoluções separáveis em profundidade (*Depthwise Separable Convolutions*) e blocos residuais invertidos, reduzindo o custo computacional (FLOPs) em ~9x frente a redes clássicas (ResNet-50).
-* **Blindagem Fitossanitária:** Limiar de confiança ativo em 85%. Inferências abaixo dessa probabilidade acionam recomendação protocolar para envio de amostra a laboratório fitopatológico credenciado.
-* **Sincronização Assíncrona Opcional:** Coleta georreferenciada de laudos via GPS local. Assim que o técnico retorna à sede com conectividade, os registros alimentam o dashboard epidemiológico regional da cooperativa.
+Este repositório preserva o histórico evolutivo completo da disciplina (**Etapas 1, 2, 3 e 4**), mas **toda a replicação final e oficial do projeto deve ser realizada exclusivamente a partir da pasta [`Etapa 4/`](Etapa%204/)**:
 
-### 3.2 Impacto Financeiro e Projeção de ROI
-* **Economia Direta de Defensivos:** Redução de **R$ 180 a R$ 350 por hectare** ao substituir pulverizações calendarizadas por intervenções cirúrgicas de precisão.
-* **Resgate de Produtividade:** Prevenção de quebra de safra estimada entre **5% e 15%** mediante diagnóstico e contenção nas primeiras 48 horas de infestação.
-* **Aderência ESG:** Redução substancial de resíduos químicos no solo e nos lençóis freáticos, alinhando a operação aos ODS 2 (Fome Zero e Agricultura Sustentável) e ODS 12 (Consumo e Produção Responsáveis) da ONU.
-
----
-
-## 4. Estrutura Modular do Repositório
-
-O repositório está organizado de forma cumulativa e auditável por etapas de desenvolvimento:
-
-```text
-ProjetoAplicado2/
-├── docs/                                  # Entregas oficiais consolidadas do projeto
-│   ├── A1 - Aplicando conhecimento.docx / .pdf  # Etapa 1: Formulação do Problema
-│   ├── A2 - Aplicando conhecimento.docx / .pdf  # Etapa 2: Modelagem Preditiva
-│   └── Relatorio_Etapa3_AgroSense_ABNT.docx / .pdf # Etapa 3: Produto Analítico e Negócios
-├── Etapa 1/                               # Concepção, justificativa e referencial teórico
-│   ├── A1 - Aplicando conhecimento.docx
-│   └── A1 - Aplicando conhecimento.pdf
-├── Etapa 2/                               # Pipeline de Machine Learning e Validação Cega
-│   ├── data/                              # Metadados das 54.305 imagens auditadas
-│   ├── models/                            # Checkpoint treinado da MobileNetV2 (26,38 MB)
-│   ├── notebooks/                         # Notebooks exploratórios e de treinamento
-│   ├── reports/                           # Figuras de EDA (300 DPI) e relatórios de métricas
-│   ├── src/                               # Scripts modulares (treinamento, EDA e métricas)
-│   ├── tests/                             # Suíte automatizada de testes e asserções antifalha
-│   └── Relatorio_Etapa2_AgroSense_ABNT.docx
-├── Etapa 3/                               # Produto Analítico, Viabilidade e Storytelling
-│   ├── data/                              # Catálogo de metadados sincronizado
-│   ├── docs/                              # Plano de trabalho detalhado da Etapa 3
-│   ├── models/                            # Grafo MobileNetV2 validado
-│   ├── notebooks/                         # Esteira analítica interativa completa
-│   │   ├── 01_eda_e_metadados.ipynb
-│   │   ├── 02_preparacao_e_treinamento_mobilenetv2.ipynb
-│   │   ├── 03_avaliacao_metricas_e_diagnostico.ipynb
-│   │   └── 04_geracao_figuras_relatorio.ipynb # Customização visual de BMC e Storytelling
-│   ├── reports/                           # Artefatos visuais e métricas consolidadas
-│   │   ├── figures/                       # BMC, Arco Narrativo, Arquitetura e EDA
-│   │   └── metrics/                       # classification_report.csv e metricas_resumo.json
-│   ├── relatorio_etapa3.md                # Fonte textual do relatório técnico
-│   └── Relatorio_Etapa3_AgroSense_ABNT.docx # Relatório final formal segundo normas ABNT
-├── .gitignore                             # Regras de exclusão de binários e dados volumosos
-├── pytest.ini                             # Configuração da suíte Pytest
-├── README.md                              # Documentação central do repositório
-└── requirements.txt                       # Dependências de produção, pesquisa e notebooks
-```
+| Pasta do Repositório | Papel na Estrutura | Deve ser usada para replicar o resultado final? |
+| :--- | :--- | :---: |
+| **[`Etapa 4/`](Etapa%204/)** | **Entrega Final Consolidada (Caminho Canônico):** Contém o catálogo auditado (`54.305` registros), o modelo final (`mobilenetv2_plantvillage.pth`, `26,38 MB`), as métricas e figuras de alta resolução (300 DPI) e os **4 Jupyter Notebooks (`.ipynb`)** que reproduzem toda a solução sem depender de scripts `.py` externos. | **SIM (Recomendado)** |
+| **[`docs/`](docs/)** | **Biblioteca de Documentos Finais:** Reúne todos os relatórios oficiais (`.pdf` e `.docx` das Etapas 1 a 4) e os slides executivos finais (`Apresentacao_Etapa4_AgroSense.pptx`). | Consulta / Leitura |
+| [`Etapa 3/`](Etapa%203/) | *Histórico Acadêmico (Etapa 3):* Versão preliminar da modelagem de negócios e storytelling antes das correções e refinamentos finais da Etapa 4. | Não (Apenas histórico) |
+| [`Etapa 2/`](Etapa%202/) | *Histórico Acadêmico (Etapa 2):* Primeiros experimentos de treinamento, scripts modulares preliminares (`src/`) e testes unitários iniciais (`tests/`). | Não (Apenas histórico) |
+| [`Etapa 1/`](Etapa%201/) | *Histórico Acadêmico (Etapa 1):* Concepção inicial do problema, justificativa e fundamentação teórica. | Não (Apenas histórico) |
 
 ---
 
-## 5. Instruções Rápidas de Reprodução
+## 2. Visão Geral e Delimitação de Escopo (Construído vs. Proposto)
 
-### 5.1 Configuração do Ambiente Virtual
-Clone o repositório e instale as dependências:
+O **AgroSense Analytics** desenvolve e valida um motor leve de Visão Computacional baseado na arquitetura **MobileNetV2** (SANDLER et al., 2018) para classificação de patologias foliares e estrutura, a partir dele, uma proposta arquitetural de aplicação *Edge AI* (**TRL 4**) e um modelo de negócios **B2B SaaS** para cooperativas agrícolas.
+
+Com rigor metodológico, o projeto separa o **artefato analítico construído e medido** da **especificação conceitual futura do produto móvel**:
+
+| Dimensão | O que foi Construído e Validado neste Repositório (`Etapa 4/`) | O que é Projeto Arquitetural Proposto (Roadmap TRL 4 → TRL 6) |
+| :--- | :--- | :--- |
+| **Software e Código** | Esteira analítica completa em **4 Jupyter Notebooks (`.ipynb`)** em [`Etapa 4/notebooks/`](Etapa%204/notebooks/), com saídas salvas e *fallback* para execução imediata pós-`git clone`. | Aplicativo **AgroSense Mobile** (especificação conceitual em Flutter + ONNX Runtime/TFLite + SQLite + GPS assíncrono). Nenhum APK/IPA compilado nesta etapa. |
+| **Modelo Neural** | Rede **MobileNetV2** pré-treinada na ImageNet e ajustada em PyTorch para **38 classes**, com perda ponderada inversa e checkpoint persistido (`26,38 MB`). | Exportação quantizada (INT8/FP16) para execução local *off-line* em *smartphones*. |
+| **Validação e Métricas** | **99,41% de acurácia Top-1** no teste cego *in-domain* ($N = 8.146$, PlantVillage), auditoria das 48 confusões e validação do limiar Softmax a 85% (**99,79%** de acurácia aceita). | Coleta piloto de fotos reais em lavoura (*in-the-wild*), incluindo doenças de soja, remoção/diversificação de fundo e validação agronômica em campo. |
+| **Latência** | Medida empiricamente em **hardware desktop local**: **1,91 ms/img** em lote GPU NVIDIA RTX 3060 (**523,4 img/s**); inferência unitária (`batch_size=1`) de **3,75 ms** na GPU e **7,47 ms** na CPU `x86_64`. | **Não medida em smartphone físico.** A meta de **< 50 ms on-device** é requisito de projeto para a fase futura de prototipagem mobile. |
+
+---
+
+## 3. Guia Passo a Passo de Replicação (`git clone`)
+
+### 3.1. Clonagem e Instalação do Ambiente (Python 3.12+)
+
+Em qualquer computador (Windows, Linux ou macOS), execute no terminal:
+
 ```bash
+# 1. Clone o repositório e acesse a pasta raiz
 git clone https://github.com/henri-sarmento/ProjetoAplicado2.git
 cd ProjetoAplicado2
+
+# 2. Crie e ative um ambiente virtual limpo
 python -m venv .venv
-# Ativação no Windows:
-.venv\Scripts\activate
-# Ativação no Linux/macOS:
+# No Windows (PowerShell):
+.\.venv\Scripts\Activate.ps1
+# No Windows (CMD):
+.\.venv\Scripts\activate.bat
+# No Linux / macOS:
 source .venv/bin/activate
 
+# 3. Instale todas as dependências
 pip install -r requirements.txt
 ```
 
-> **Aceleração via GPU (NVIDIA CUDA 12.4):** Caso utilize ambiente com placa NVIDIA, instale o build correspondente do PyTorch:
+> **Dica (GPU NVIDIA Opcional):** O projeto roda perfeitamente em **CPU** ou **GPU**. Caso possua GPU NVIDIA com CUDA 12.4 e deseje aceleração por hardware:
 > ```bash
 > pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
 > ```
 
-### 5.2 Execução dos Testes Automatizados da Etapa 2
-Para executar as asserções de qualidade, integridade dos tensores e ausência de *data leakage*:
-```bash
-pytest "Etapa 2/tests"
-```
+### 3.2. Como Executar a Replicação Final na `Etapa 4/`
 
-### 5.3 Auditoria Independente de Métricas (Sem Necessidade de Retreino)
-Execute a inferência cega sobre o conjunto de teste utilizando o checkpoint persistido:
-```bash
-python "Etapa 2/src/evaluate_metrics.py"
-```
+Para não sobrecarregar o Git com mais de 800 MB de imagens brutas, o diretório de fotos originais (`plantvillage dataset/color/`) é ignorado no `.gitignore`, enquanto o catálogo completo auditado (`Etapa 4/data/metadados_plantvillage.csv`), o modelo treinado (`Etapa 4/models/mobilenetv2_plantvillage.pth`) e as métricas do teste cego (`Etapa 4/reports/metrics/`) **já estão versionados no repositório**.
 
-### 5.4 Execução da Esteira da Etapa 3 via Jupyter
-Inicie o servidor Jupyter para explorar ou reexecutar os notebooks da esteira analítica:
+Por isso, você pode reproduzir o projeto de duas formas:
+
+#### Modo A — Replicação Imediata Pós-Clone (100% Off-line, Sem Baixar 800 MB de Imagens)
+Basta abrir os notebooks da pasta **`Etapa 4/notebooks/`** no JupyterLab, VS Code ou Google Colab:
+
 ```bash
 jupyter lab
 ```
-Navegue até a pasta `Etapa 3/notebooks/` para acessar:
-* `01_eda_e_metadados.ipynb`: Análise exploratória e extração de metadados foliares.
-* `02_preparacao_e_treinamento_mobilenetv2.ipynb`: Pipeline PyTorch e treinamento supervisionado com função de perda ponderada.
-* `03_avaliacao_metricas_e_diagnostico.ipynb`: Matriz de confusão e métricas no teste cego.
-* `04_geracao_figuras_relatorio.ipynb`: Geração e customização visual interativa do Business Model Canvas, Arco Narrativo e Arquitetura Edge AI.
+
+Todos os cadernos de `01` a `04` possuem detecção automática de ambiente (**Modo Catálogo**) e executam do início ao fim sem erro mesmo sem as fotos brutas:
+
+1. **[`Etapa 4/notebooks/01_eda_e_metadados.ipynb`](Etapa%204/notebooks/01_eda_e_metadados.ipynb):** Carrega `Etapa 4/data/metadados_plantvillage.csv` ($N = 54.305$), audita a integridade das 38 classes e 14 culturas e regenera em 300 DPI os gráficos de distribuição de classes (`eda_distribuicao_classes.png`), status sanitário (`eda_status_sanitario.png`) e assinatura RGB (`eda_distribuicao_rgb.png`).
+2. **[`Etapa 4/notebooks/02_preparacao_e_treinamento_mobilenetv2.ipynb`](Etapa%204/notebooks/02_preparacao_e_treinamento_mobilenetv2.ipynb):** Executa a divisão estratificada determinística 70/15/15 (`seed=42`, 0% *data leakage*), calcula os pesos inversos da `CrossEntropyLoss`, carrega o checkpoint `Etapa 4/models/mobilenetv2_plantvillage.pth` (`USE_EXISTING_CHECKPOINT = True`) e gera `curvas_aprendizado.png`.
+3. **[`Etapa 4/notebooks/03_avaliacao_metricas_e_diagnostico.ipynb`](Etapa%204/notebooks/03_avaliacao_metricas_e_diagnostico.ipynb):** Carrega as métricas do teste cego ($N = 8.146$), **mede ao vivo a latência unitária (`batch_size=1`) na CPU/GPU do seu computador** e executa a memória de cálculo financeira do ROI (1.000 ha).
+4. **[`Etapa 4/notebooks/04_geracao_figuras_relatorio.ipynb`](Etapa%204/notebooks/04_geracao_figuras_relatorio.ipynb):** Gera programaticamente em 300 DPI os diagramas de Arquitetura Edge AI (`figura_arquitetura_edge_ai.png`), Business Model Canvas (`figura_canvas_negocios.png`) e Arco Narrativo em 3 Atos (`figura_storytelling_arco.png`).
+
+
+Se preferir reexecutar via terminal (`nbconvert`):
+
+```bash
+jupyter nbconvert --to notebook --execute --inplace "Etapa 4/notebooks/01_eda_e_metadados.ipynb"
+jupyter nbconvert --to notebook --execute --inplace "Etapa 4/notebooks/02_preparacao_e_treinamento_mobilenetv2.ipynb"
+jupyter nbconvert --to notebook --execute --inplace "Etapa 4/notebooks/03_avaliacao_metricas_e_diagnostico.ipynb"
+jupyter nbconvert --to notebook --execute --inplace "Etapa 4/notebooks/04_geracao_figuras_relatorio.ipynb"
+```
+
+#### Modo B — Reexecução Completa com as 54.305 Imagens Brutas do PlantVillage (Opcional)
+Caso deseje reexecutar a varredura física dos JPEGs (Notebook 01), retreinar as 5 épocas do zero (`USE_EXISTING_CHECKPOINT = False` no Notebook 02) ou rodar a inferência em lote nas 8.146 imagens do teste cego (Notebook 03):
+1. Baixe o subconjunto colorido (`color`) do dataset público **PlantVillage** (54.305 imagens divididas nas 38 pastas originais);
+2. Posicione a pasta em `ProjetoAplicado2/plantvillage dataset/color/` (os notebooks detectam automaticamente esse caminho e ativam o modo de leitura completa de imagens).
 
 ---
 
-## 6. Arco Narrativo de Data Storytelling (Pitch Executivo)
+## 4. Estrutura Completa de Pastas do Repositório
 
-* **Ato 1: O Prejuízo Invisível no Talhão (O Problema)**  
-  O agronegócio brasileiro perde anualmente mais de R$ 55 bilhões devido a pragas e patologias foliares. A inspeção visual humana é escassa e sujeita a diagnósticos tardios. Quando o agrônomo tenta recorrer a ferramentas digitais, depara-se com o fato de que mais de 70% das lavouras não possuem sinal 4G/5G, exibindo a tela de *"Sem conexão"*.
-
-* **Ato 2: AgroSense Mobile — Inteligência Artificial On-Device Sem Internet (A Proposta de Valor)**  
-  O AgroSense coloca um laboratório fitopatológico no bolso do agrônomo. O diagnóstico ocorre em menos de 50 milissegundos através da câmera, operando 100% off-line. Essa agilidade é sustentada por uma rede neural convolucional leve (MobileNetV2, 26,38 MB), calibrada para 38 classes patológicas e comprovada com 99,41% de acurácia em teste cego.
-
-* **Ato 3: Da Detecção Precoce ao Bolso — Economia e Inteligência Regional (O Resultado)**  
-  A intervenção em até 48 horas resgata de 5% a 15% da produtividade que seria perdida e gera economia direta de R$ 180 a R$ 350 por hectare em defensivos. Para as cooperativas, a telemetria assíncrona georreferenciada viabiliza mapas de calor regionais e prevenção epidemiológica, com pleno alinhamento ESG.
-
----
-
-## 7. Licença e Referências Técnicas
-* **Licença:** Distribuído sob a licença [MIT](LICENSE).
-* **Base de Dados:** Hughes, D., & Salathé, M. (2015). *An open access repository of images on plant health to enable the development of mobile disease diagnostics*. arXiv:1511.08060 (PlantVillage).
-* **Arquitetura Base:** Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., & Chen, L. C. (2018). *MobileNetV2: Inverted Residuals and Linear Bottlenecks*. CVPR 2018.
+```text
+ProjetoAplicado2/
+├── README.md                                          # Documentação central e guia de replicação
+├── requirements.txt                                   # Dependências unificadas do projeto (Python 3.12+)
+├── .gitignore                                         # Regras de exclusão de ambientes e imagens brutas (>800 MB)
+├── pytest.ini                                         # Configuração da suíte histórica de testes
+│
+├── docs/                                              # ENTREGAS OFICIAIS CONSOLIDADAS (ETAPAS 1 A 4)
+│   ├── Relatorio_Etapa4_AgroSense_ABNT.pdf            # ★ Relatório Técnico Final da Etapa 4 (PDF)
+│   ├── Relatorio_Etapa4_AgroSense_ABNT.docx           # ★ Relatório Técnico Final da Etapa 4 (Word ABNT)
+│   ├── Apresentacao_Etapa4_AgroSense.pptx             # ★ Apresentação Executiva Final (10 Slides 16:9)
+│   ├── Relatorio_Etapa3_AgroSense_ABNT.docx / .pdf    # Histórico: Relatório da Etapa 3
+│   ├── A2 - Aplicando conhecimento.docx / .pdf        # Histórico: Relatório da Etapa 2
+│   └── A1 - Aplicando conhecimento.docx / .pdf        # Histórico: Relatório da Etapa 1
+│
+├── Etapa 4/                                           # ★ DIRETÓRIO CANÔNICO PARA REPLICAÇÃO FINAL
+│   ├── notebooks/                                     # 4 Jupyter Notebooks (.ipynb) executados e autocontidos
+│   │   ├── 01_eda_e_metadados.ipynb                   # Catálogo de 54.305 imagens e gráficos exploratórios (EDA)
+│   │   ├── 02_preparacao_e_treinamento_mobilenetv2.ipynb # Split 70/15/15, perda ponderada e MobileNetV2
+│   │   ├── 03_avaliacao_metricas_e_diagnostico.ipynb  # Teste cego N=8.146, 48 confusões, limiar 85%, latência e ROI
+│   │   └── 04_geracao_figuras_relatorio.ipynb         # Diagramas de Arquitetura, Canvas e Storytelling (300 DPI)
+│   ├── data/
+│   │   ├── metadados_plantvillage.csv                 # Catálogo auditado (54.305 registros, 38 classes)
+│   │   └── metadados_plantvillage.csv.gz              # Versão compactada
+│   ├── models/
+│   │   └── mobilenetv2_plantvillage.pth               # Checkpoint MobileNetV2 treinado (26,38 MB)
+│   └── reports/
+│       ├── metrics/
+│       │   ├── metricas_resumo.json                   # Métricas do teste cego e benchmark de latência desktop
+│       │   └── classification_report.csv              # Precisão, Revocação e F1 das 38 classes
+│       └── figures/                                   # 12 figuras em 300 DPI (EDA, treino, teste, Canvas e Arco)
+│
+├── Etapa 3/                                           # Registro histórico da Etapa 3
+├── Etapa 2/                                           # Registro histórico da Etapa 2
+└── Etapa 1/                                           # Registro histórico da Etapa 1
+```
